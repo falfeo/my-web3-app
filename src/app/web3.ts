@@ -5,8 +5,13 @@ export const WEB3 = new InjectionToken<Web3>('web3', {
   providedIn: 'root',
   factory: () => {
     try {
+      let provider = Web3.givenProvider;
       // @ts-ignore
-      const provider = ('ethereum' in window) ? window['ethereum'] : Web3.givenProvider;
+      if (('ethereum' in window)) {
+        console.log("ethereum in window");
+        // @ts-ignore
+        provider =  window['ethereum'];
+      }
       console.log("provider", provider);
       return new Web3(provider);
     } catch (err) {
